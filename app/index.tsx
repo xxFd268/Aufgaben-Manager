@@ -1,8 +1,16 @@
+import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button } from "@react-navigation/elements";
-import { Link, useFocusEffect } from "expo-router"; // useFocusEffect ergänzt
+import { Link, useFocusEffect } from "expo-router";
 import React, { useCallback, useState } from "react";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 const index = () => {
   const [tasks, setTasks] = useState([]);
@@ -64,7 +72,10 @@ const index = () => {
       ></FlatList>
 
       <Link href="./new_task" asChild>
-        <Button>Neuer Task</Button>
+        <TouchableOpacity style={styles.floatingButton}>
+          {/* Ein Plus-Icon (md-add-circle) in weiß */}
+          <Ionicons name="add" size={48} color="white" />
+        </TouchableOpacity>
       </Link>
     </View>
   );
@@ -114,5 +125,11 @@ const styles = StyleSheet.create({
     padding: 20,
     borderBottomColor: "#00000084",
     borderBottomWidth: 2,
+  },
+  floatingButton: {
+    backgroundColor: "#8bd3f0",
+    alignSelf: "flex-end",
+    padding: 5,
+    borderRadius: 45,
   },
 });
