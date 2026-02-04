@@ -73,7 +73,7 @@ const index = () => {
 
       <Link href="./new_task" asChild>
         <TouchableOpacity style={styles.floatingButton}>
-          {/* Ein Plus-Icon (md-add-circle) in weiß */}
+          {}
           <Ionicons name="add" size={48} color="white" />
         </TouchableOpacity>
       </Link>
