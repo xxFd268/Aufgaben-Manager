@@ -19,29 +19,40 @@ const NewTask = () => {
   const saveTask = async () => {
     if (aufgabe && wert) {
       try {
+        // 1. Vorhandene Tasks laden (Das hat gefehlt!)
         const jsonValue = await AsyncStorage.getItem("tasks");
         const currentTasks = jsonValue != null ? JSON.parse(jsonValue) : [];
+
+        // 2. Wert umwandeln (Komma zu Punkt für JS)
+        const numerischerWert = parseFloat(wert.replace(",", "."));
+
+        // Validierung: Falls jemand nur ein Komma eingibt
+        if (isNaN(numerischerWert)) {
+          Platform.OS === "web"
+            ? window.alert("Bitte eine gültige Zahl eingeben")
+            : Alert.alert("Fehler", "Ungültige Zahl");
+          return;
+        }
 
         const newTask = {
           id: Date.now(),
           Aufgabe: aufgabe,
           status: "offen",
-          wert: parseInt(wert),
+          wert: numerischerWert,
         };
 
+        // 3. Speichern
         const updatedTasks = [...currentTasks, newTask];
         await AsyncStorage.setItem("tasks", JSON.stringify(updatedTasks));
 
-        // 3. Erst benachrichtigen, dann navigieren
+        // 4. Benachrichtigung & Navigation
         if (Platform.OS === "web") {
           window.alert(`Gespeichert: Aufgabe "${aufgabe}" wurde erstellt.`);
-          router.replace("/"); // Zurück zur Index-Seite
+          router.replace("/");
         } else {
-          Alert.alert(
-            "Gespeichert",
-            `Aufgabe "${aufgabe}" wurde erstellt.`,
-            [{ text: "OK", onPress: () => router.replace("/") }], // Navigation nach Klick auf OK
-          );
+          Alert.alert("Gespeichert", `Aufgabe "${aufgabe}" wurde erstellt.`, [
+            { text: "OK", onPress: () => router.replace("/") },
+          ]);
         }
 
         setAufgabe("");
@@ -68,10 +79,11 @@ const NewTask = () => {
       <Text>Wert:</Text>
       <TextInput
         style={styles.input}
-        onChangeText={(text) => setWert(text.replace(/[^0-9]/g, ""))}
-        value={wert}
         placeholder="Belohnung in €"
-        keyboardType="numeric"
+        value={wert}
+        // Erlaubt Zahlen sowie Punkt und Komma
+        onChangeText={(text) => setWert(text.replace(/[^0-9,.]/g, ""))}
+        keyboardType="decimal-pad"
       />
       <Button onPress={saveTask}>Task Hinzufügen</Button>
     </View>

@@ -30,13 +30,18 @@ const Guthaben = () => {
     .filter((t) => t.status === "erledigt")
     .reduce((sum, current) => sum + current.wert, 0);
 
+  const formatiertesGuthaben = gesamtGuthaben.toLocaleString("de-DE", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.HadlineText}>Guthaben</Text>
       </View>
       <Text style={styles.label}>Dein aktuelles Guthaben:</Text>
-      <Text style={styles.amount}>{gesamtGuthaben} €</Text>
+      <Text style={styles.amount}>{formatiertesGuthaben} €</Text>
     </View>
   );
 };

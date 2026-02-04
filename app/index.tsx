@@ -44,10 +44,14 @@ const index = () => {
 
   const renderOpenItem = ({ item }) => {
     if (item.status !== "offen") return null;
+
+    // Sicherstellen, dass item.wert eine Zahl ist, dann formatieren
+    const formatierterWert = Number(item.wert).toFixed(2).replace(".", ",");
+
     return (
       <View style={styles.TaskItem}>
-        <Text> Aufgabe: {item.Aufgabe} </Text>
-        <Text> Belohnung: {item.wert}€ </Text>
+        <Text style={{ fontWeight: "bold" }}> Aufgabe: {item.Aufgabe} </Text>
+        <Text> Belohnung: {formatierterWert}€ </Text>
         <Button onPress={() => SubmitFinish(item.id)}>Erledigt</Button>
       </View>
     );
