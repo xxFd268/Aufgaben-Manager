@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
 
   link: {
-    paddingTop: 50,
+    paddingTop: 20,
     paddingHorizontal: 20,
     paddingBottom: 20,
     backgroundColor: "#8bd3f0",
