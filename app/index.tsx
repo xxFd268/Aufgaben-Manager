@@ -5,7 +5,6 @@ import { Link, useFocusEffect } from "expo-router";
 import React, { useCallback, useState } from "react";
 import {
   FlatList,
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -56,13 +55,9 @@ const index = () => {
 
   return (
     <View style={styles.container}>
-      <Link href="./profile" style={styles.link}>
-        <Image
-          source={require("../assets/img/Felix.png")}
-          style={styles.image}
-        />
-      </Link>
-
+      <View style={styles.header}>
+        <Text style={styles.HadlineText}>Home</Text>
+      </View>
       <Text style={styles.title}> Aufgabe: </Text>
 
       <FlatList
@@ -89,36 +84,33 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
-  link: {
-    paddingTop: 20,
+  header: {
+    // FIX: Positioniert den Header ganz oben, ohne das Zentrieren der anderen Elemente zu stören
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+
+    paddingTop: 50, // Etwas mehr Platz für die Notch/Statusleiste
     paddingHorizontal: 20,
     paddingBottom: 20,
     backgroundColor: "#8bd3f0",
 
-    marginLeft: -20,
-    marginRight: -20,
-    marginTop: -20,
-    marginBottom: 60,
-
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "center",
   },
-
-  image: {
-    width: 80,
-    height: 80,
-    backgroundColor: "#383838",
-    borderRadius: 45,
-    resizeMode: "contain",
-    justifyContent: "center",
-    alignItems: "center",
+  HadlineText: {
+    fontSize: 40,
+    fontWeight: "bold",
+    color: "white",
   },
 
   title: {
-    marginBottom: 30,
+    marginTop: 150,
     fontSize: 20,
     fontWeight: "bold",
+    textAlign: "center",
   },
   TaskItem: {
     marginBottom: 20,

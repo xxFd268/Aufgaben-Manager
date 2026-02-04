@@ -29,11 +29,6 @@ const profile = () => {
     await AsyncStorage.setItem("tasks", JSON.stringify(remainingTasks));
   };
 
-  // 2. Summe berechnen: Nur von erledigten Aufgaben
-  const gesamtGuthaben = tasks
-    .filter((t) => t.status === "erledigt")
-    .reduce((sum, current) => sum + current.wert, 0);
-
   const renderFinishedItem = ({ item }) => {
     if (item.status !== "erledigt") return null;
     return (
@@ -48,8 +43,9 @@ const profile = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Mein Profil</Text>
-      <Text style={styles.balance}>Gesamt verdient: {gesamtGuthaben}€</Text>
+      <View style={styles.header}>
+        <Text style={styles.HadlineText}>History</Text>
+      </View>
 
       <Text style={styles.subtitle}>Erledigte Aufgaben:</Text>
       <FlatList
@@ -66,21 +62,36 @@ export default profile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
   },
-  title: {
-    fontSize: 30,
+
+  header: {
+    // FIX: Positioniert den Header ganz oben, ohne das Zentrieren der anderen Elemente zu stören
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+
+    paddingTop: 50, // Etwas mehr Platz für die Notch/Statusleiste
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    backgroundColor: "#8bd3f0",
+
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
+  HadlineText: {
+    fontSize: 40,
     fontWeight: "bold",
-    marginBottom: 30,
-    textAlign: "center",
+    color: "white",
   },
-  balance: {
-    fontSize: 20,
-    textAlign: "center",
-    marginBottom: 15,
-  },
+
   subtitle: {
-    fontSize: 18,
+    marginBottom: 30,
+    fontSize: 20,
+    fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 10,
+    marginTop: 150,
   },
 });
